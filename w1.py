@@ -11,7 +11,7 @@ import fplot
 import convs
 
 ## kernel variables
-kernel_size = 15
+kernel_size = 31
 kernel = np.full(kernel_size, 1/kernel_size)
 
 ## input variables
@@ -22,26 +22,27 @@ filter_on = 0
 print(1000/RATE*2)
 ## filter declaration
 win_rect = signal.firwin(   numtaps=kernel_size,
-                            cutoff=1000/RATE*2, 
+                            cutoff=[500/RATE*2, 1500/RATE*2], 
                             window="boxcar", 
-                            pass_zero='lowpass')
+                            pass_zero='bandstop')
 win_hamm = signal.firwin(   numtaps=kernel_size, 
-                            cutoff=1000/RATE*2, 
+                            cutoff=[500/RATE*2, 1500/RATE*2], 
                             window="hamming", 
-                            pass_zero='lowpass')
+                            pass_zero='bandstop')
 win_cos = signal.firwin(    numtaps=kernel_size, 
-                            cutoff=1000/RATE*2, 
+                            cutoff=[500/RATE*2, 1500/RATE*2], 
                             window="cosine", 
-                            pass_zero='lowpass')
+                            pass_zero='bandstop')
 win_tri = signal.firwin(    numtaps=kernel_size, 
-                            cutoff=1000/RATE*2, 
+                            cutoff=[500/RATE*2, 1500/RATE*2], 
                             window="triang", 
-                            pass_zero='lowpass')
+                            pass_zero='bandstop')
 fplot.mfreqz(win_rect)
 fplot.mfreqz(win_hamm)
 fplot.mfreqz(win_cos)
 fplot.mfreqz(win_tri)
 fplot.show()
+
 ## main
 p=pyaudio.PyAudio()
 stream = p.open(format=pyaudio.paInt16, \
